@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { debounce } from 'lodash';
-
 import './App.css';
 import { Tabs } from 'antd';
+import { debounce } from 'lodash';
 
 import SearchInput from './components/SearchInput.jsx';
 import MovieList from './components/MovieList.jsx';
@@ -115,7 +114,7 @@ function App() {
         } catch (err) {
           setRatedState((prevState) => ({
             ...prevState,
-            error: 'ddddd',
+            error: 'Не удалось загрузить или не нашлось оцененных фильмов!',
           }));
         } finally {
           setRatedState((prevState) => ({
@@ -191,7 +190,6 @@ function App() {
       ),
     },
   ];
-
   return (
     <div className="main">
       {authError ? (

@@ -81,3 +81,22 @@ export const getRateMovie = async (guestSesId) => {
     throw new Error(error.message);
   }
 };
+export const getGenreMovie = async () => {
+  try {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${API_KEY}`,
+      },
+    };
+    const genre = 'https://api.themoviedb.org/3/genre/movie/list';
+    const response = await fetch(genre, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};

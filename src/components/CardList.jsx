@@ -1,9 +1,15 @@
-import React from 'react';
-import { Rate } from 'antd';
+import React, { useContext } from 'react';
+import { Rate, Tag } from 'antd';
+import { format } from 'date-fns';
 
+import { GenresContext } from '../GenreContext';
 import noPic from '../../public/noPic.jpg';
 
 const CardList = ({ movie, handleChangeRate, rating }) => {
+  const genre = useContext(GenresContext);
+  const getg = (key) => {
+    return genre.genre[key];
+  };
   const resizeDescription = (desc) => {
     if (desc.length > 20) {
       return desc.split(' ').slice(0, 20).join(' ') + '...';
@@ -26,6 +32,11 @@ const CardList = ({ movie, handleChangeRate, rating }) => {
     if (rating > 7) return '#66E900';
     return '#E0E0E0';
   };
+  const parseDate = (releaseDate) => {
+    const date = new Date(releaseDate);
+    return isNaN(date.getTime()) ? 'Unknown date' : format(date, 'MMMM d, yyyy');
+  };
+
   return (
     <li className="card">
       <img
@@ -41,14 +52,13 @@ const CardList = ({ movie, handleChangeRate, rating }) => {
           </div>
         </div>
 
-        <p className="content__date">{movie.release_date} </p>
+        <p className="content__date">{parseDate(movie.release_date)} </p>
         <div className="content__genre">
-          <button className="button__genre" type="button">
-            Drama
-          </button>
-          <button className="button__genre" type="button">
-            Action
-          </button>
+          {movie.genre_ids.length > 0 ? (
+            movie.genre_ids.map((id, index) => <Tag key={index}>{getg(id)}</Tag>)
+          ) : (
+            <Tag>No genre</Tag>
+          )}
         </div>
         <p className="content_description">{resizeDescription(movie.overview)}</p>
         <Rate

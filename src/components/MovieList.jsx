@@ -3,7 +3,7 @@ import { Alert, Spin } from 'antd';
 
 import CardList from './CardList';
 
-export default function MovieList({ rating, movies, isLoading, error, handleChangeRate }) {
+export default function MovieList({ genre, rating, movies, isLoading, error, handleChangeRate }) {
   if (!movies.length) {
     return <Alert message="Фильмы не найдены!" type="warning" />;
   }
@@ -19,7 +19,7 @@ export default function MovieList({ rating, movies, isLoading, error, handleChan
   return (
     <ul className="cardRow">
       {movies.map((movie) => (
-        <CardList movie={movie} key={movie.id} rating={rating} handleChangeRate={handleChangeRate} />
+        <CardList movie={movie} genre={genre} key={movie.id} rating={rating} handleChangeRate={handleChangeRate} />
       ))}
     </ul>
   );
