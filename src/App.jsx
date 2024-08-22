@@ -142,7 +142,7 @@ function App() {
       }));
     }
   };
-  //изменение рейтинга фильма с пост запросом на сервер
+  //изменение рейтинга фильма с пост запросом на серверr
   const handleChangeRate = (val, id) => {
     if (!guestId) return;
     const ratemovie = async () => {
