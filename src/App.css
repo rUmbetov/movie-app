@@ -31,7 +31,7 @@ ul{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 268px;
+  width: 313px;
   font-size: 12px;
   text-align: left;
   padding-left: 20px;
@@ -80,6 +80,7 @@ ul{
 .content__star{
   flex-direction: row;
   height: 40px;
+  width: 275px;
 }
 .button__genre{
   padding: 3px 5px;
@@ -94,7 +95,7 @@ ul{
   background-color: #864e4e;
 }
 .card{
-  width: 454px;
+  width: 487px;
   height: 281px;
   background-color: #fff;
   display: flex;

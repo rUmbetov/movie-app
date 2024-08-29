@@ -62,7 +62,7 @@ export const addRateMovie = async (movieId, rate, guestSesId) => {
     throw new Error(error.message);
   }
 };
-export const getRateMovie = async (guestSesId) => {
+export const getRateMovie = async (guestSesId, page) => {
   try {
     const options = {
       method: 'GET',
@@ -71,7 +71,7 @@ export const getRateMovie = async (guestSesId) => {
         Authorization: `Bearer ${API_KEY}`,
       },
     };
-    const rateMovieUrl = `https://api.themoviedb.org/3/guest_session/${guestSesId}/rated/movies`;
+    const rateMovieUrl = `https://api.themoviedb.org/3/guest_session/${guestSesId}/rated/movies?&page=${page}`;
     const response = await fetch(rateMovieUrl, options);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
