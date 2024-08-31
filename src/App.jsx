@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import { Tabs } from 'antd';
 import { debounce } from 'lodash';
@@ -30,6 +30,7 @@ function App() {
   const [guestId, setGuestId] = useState(null);
   const [authError, setAuthError] = useState(null);
   const [activeTab, setActiveTab] = useState('1');
+  const [rated, setRated] = useState([]);
 
   // Гостевая сессия по API
   useEffect(() => {
@@ -155,6 +156,7 @@ function App() {
       ...prevState,
       rating: val,
     }));
+    setRated([...rated, { id, val }]);
   };
 
   const handleChangeTabs = (tab) => {
@@ -169,6 +171,7 @@ function App() {
         <>
           <SearchInput value={searchState.searchQuery} onChange={handleInputChange} />
           <MovieList
+            rated={rated}
             movies={searchState.movieDb}
             isLoading={searchState.isLoading}
             error={searchState.error}
@@ -194,7 +197,6 @@ function App() {
       ),
     },
   ];
-
   return (
     <div className="main">
       {authError ? (

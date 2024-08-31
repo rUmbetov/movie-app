@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { GenresContext } from '../GenreContext';
 import noPic from '../../public/noPic.jpg';
 
-const CardList = ({ movie, handleChangeRate, rating }) => {
+const CardList = ({ rated, movie, handleChangeRate }) => {
   const genre = useContext(GenresContext);
   const getg = (key) => {
     return genre.genre[key];
@@ -36,7 +36,10 @@ const CardList = ({ movie, handleChangeRate, rating }) => {
     const date = new Date(releaseDate);
     return isNaN(date.getTime()) ? 'Unknown date' : format(date, 'MMMM d, yyyy');
   };
-
+  const getRate = () => {
+    const found = rated.find((el) => el.id === movie.id);
+    return found ? found.val : 0;
+  };
   return (
     <li className="card">
       <img
@@ -65,7 +68,8 @@ const CardList = ({ movie, handleChangeRate, rating }) => {
           className="content__star"
           allowHalf
           count={10}
-          defaultValue={movie.rating ? movie.rating : rating}
+          defaultValue={0}
+          value={movie.rating ? movie.rating : getRate()}
           onChange={onChange}
         />
       </div>
