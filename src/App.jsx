@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import './App.css';
 import { Tabs } from 'antd';
 import { debounce } from 'lodash';
@@ -31,7 +31,7 @@ function App() {
   const [authError, setAuthError] = useState(null);
   const [activeTab, setActiveTab] = useState('1');
 
-  //гостевая сессия по Апи
+  // Гостевая сессия по API
   useEffect(() => {
     const authenticate = async () => {
       setAuthError(null);
@@ -45,7 +45,7 @@ function App() {
     authenticate();
   }, []);
 
-  //Изменение поиска
+  // Изменение поиска
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchState((prevState) => ({
@@ -54,7 +54,8 @@ function App() {
       page: 1,
     }));
   };
-  //дебаунс для поиска
+
+  // Дебаунс для поиска
   const debouncedSetSearchQuery = useCallback(
     debounce((query) => {
       setSearchState((prevState) => ({
@@ -64,12 +65,12 @@ function App() {
     }, 500),
     []
   );
-  //вызов дебаунса при изменении поиска
+
+  // Вызов дебаунса при изменении поиска
   useEffect(() => {
     debouncedSetSearchQuery(searchState.searchQuery);
   }, [searchState.searchQuery, debouncedSetSearchQuery]);
-  //Получение списка фильмов если активна вкладка поиска иначе
-  //получение списка оцененных фильмов если активна вкладка рейтинг и пользователь успешно залогинился
+
   useEffect(() => {
     const fetchData = async () => {
       if (activeTab === '1' && searchState.debouncedSearchQuery) {
@@ -128,7 +129,7 @@ function App() {
     fetchData();
   }, [activeTab, searchState.debouncedSearchQuery, searchState.page, ratedState.page, guestId]);
 
-  //Изменение страницы пагинации
+  // Изменение страницы пагинации
   const handleChangePage = (page) => {
     if (activeTab === '1') {
       setSearchState((prevState) => ({
@@ -142,7 +143,8 @@ function App() {
       }));
     }
   };
-  //изменение рейтинга фильма с пост запросом на серверr
+
+  // Изменение рейтинга фильма с пост запросом на сервер
   const handleChangeRate = (val, id) => {
     if (!guestId) return;
     const ratemovie = async () => {
@@ -154,9 +156,11 @@ function App() {
       rating: val,
     }));
   };
+
   const handleChangeTabs = (tab) => {
     setActiveTab(tab);
   };
+
   const items = [
     {
       key: '1',
@@ -190,6 +194,7 @@ function App() {
       ),
     },
   ];
+
   return (
     <div className="main">
       {authError ? (
