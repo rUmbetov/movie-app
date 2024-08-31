@@ -152,11 +152,15 @@ function App() {
       await addRateMovie(id, val, guestId);
     };
     ratemovie();
-    setSearchState((prevState) => ({
-      ...prevState,
-      rating: val,
-    }));
-    setRated([...rated, { id, val }]);
+    setRated((prevState) => {
+      const index = prevState.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        const updatedState = [...prevState];
+        updatedState[index] = { id, val };
+        return updatedState;
+      }
+      return [...prevState, { id, val }];
+    });
   };
 
   const handleChangeTabs = (tab) => {
